@@ -18,5 +18,19 @@ public class AdminPage extends Utils{
 	
 	@FindBy(xpath="//a[contains(@href,'admin')]")
 	WebElement admin;
+	
+	@FindBy(xpath="//input[contains(@placeholder,'Type')]")
+	WebElement EmployeeName;
+	
+	@FindBy(xpath="//button[@type='submit']")
+	WebElement searchEmployee;
+	
+	//to search for an employee 
+	public void employeeRecord(String employeeName) {
+		
+		admin.click();
+		EmployeeName.sendKeys(employeeName);
+		searchEmployee.click();
+	}
 
 }
