@@ -38,7 +38,7 @@ public LandingDashboardPage(WebDriver driver) {
 		password.sendKeys(Password);
 		login.click();
 	}
-	
+	//Individual testing template
 	public static void main(String[] args) {
 		System.setProperty("webdriver.chrome.driver", "C:\\Users\\dell\\Desktop\\Eclipse workspace\\SDET Udemy\\OrangeHRM\\chromedriver\\chromedriver.exe");
 		WebDriver driver = new ChromeDriver();
