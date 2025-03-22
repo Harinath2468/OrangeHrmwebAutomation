@@ -1,11 +1,17 @@
 package pages;
 
+import java.time.Duration;
+import java.util.List;
+
+import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
+import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
 
 import Abstractcomponents.Utils;
+import customExceptions.EmployeeNotFoundException;
 
 public class AdminPage extends Utils{
 	WebDriver driver;
@@ -19,27 +25,48 @@ public class AdminPage extends Utils{
 	@FindBy(xpath="//a[contains(@href,'admin')]")
 	WebElement admin;
 	
-	@FindBy(xpath="//input[contains(@placeholder,'Type')]")
+	@FindBy(xpath="//div[@class='oxd-table-filter']//input[@class='oxd-input oxd-input--active']")
 	WebElement EmployeeName;
 	
 	@FindBy(xpath="//button[@type='submit']")
 	WebElement searchEmployee;
 	
 	//to search for an employee 
-	public void employeeRecord(String employeeName) {
-	admin.click();
-	EmployeeName.sendKeys(employeeName);
-	searchEmployee.click();
-	List<WebElement> employees = driver.findElements(By.xpath("//div[@role='cell'][4])"));
-	
+	public void getEmployeeRecord() {
+		admin.click();
+		List<WebElement> employees = driver.findElements(By.xpath("//div[@role='cell'][4]"));
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		for(WebElement employee : employees) {
-		//if employee found
-		if(employee.getText().equalsIgnoreCase(employeeName)) {
-			System.out.println(employee.getText()+"  is an employee of Xcompany.");
-		}
-		else {
-			System.out.println("No record found");
+			System.out.println(employee.getText());	
 		}
 	}
-
+	public void getEmployee(String username) throws EmployeeNotFoundException {
+		admin.click();
+		EmployeeName.sendKeys(username);
+		searchEmployee.click();
+		WebElement usernameDisplayed = driver.findElement(By.xpath("//div[@role='cell'][2]"));
+		//if employee found
+		if(usernameDisplayed.getText().equalsIgnoreCase(username)) {
+			System.out.println(usernameDisplayed.getText()+" is an employee of Xcompany.");
+		}else {
+			throw new EmployeeNotFoundException("No record found on this username");
+			//System.out.println("No record found on this username");
+		}
+	}
+	
+	//Individual testing template
+	public static void main(String[] args) throws EmployeeNotFoundException {
+		System.setProperty("webdriver.chrome.driver", "C:\\Users\\dell\\Desktop\\Eclipse workspace\\SDET Udemy\\OrangeHRM\\chromedriver\\chromedriver.exe");
+		WebDriver driver = new ChromeDriver();
+		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
+		driver.manage().window().maximize();
+		LandingDashboardPage lp = new LandingDashboardPage(driver);
+		lp.goToURL();
+		lp.loginToHrm("Admin", "admin123");
+		
+		AdminPage ad = new AdminPage(driver);
+		ad.getEmployeeRecord();
+		ad.getEmployee("Admin");
+		
+	}
 }
