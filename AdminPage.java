@@ -27,10 +27,19 @@ public class AdminPage extends Utils{
 	
 	//to search for an employee 
 	public void employeeRecord(String employeeName) {
-		
-		admin.click();
-		EmployeeName.sendKeys(employeeName);
-		searchEmployee.click();
+	admin.click();
+	EmployeeName.sendKeys(employeeName);
+	searchEmployee.click();
+	List<WebElement> employees = driver.findElements(By.xpath("//div[@role='cell'][4])"));
+	
+		for(WebElement employee : employees) {
+		//if employee found
+		if(employee.getText().equalsIgnoreCase(employeeName)) {
+			System.out.println(employee.getText()+"  is an employee of Xcompany.");
+		}
+		else {
+			System.out.println("No record found");
+		}
 	}
 
 }
