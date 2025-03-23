@@ -33,6 +33,9 @@ public class AdminPage extends Utils{
 	
 	@FindBy(xpath="//div[@role='cell'][4]")
 	List<WebElement> employees;
+
+	@FindBy(xpath="//div[@role='cell'][2]")
+	WebElement usernameDisplayed;
 	
 	//to search for an employee 
 	public void getEmployeeRecord() {
@@ -48,7 +51,6 @@ public class AdminPage extends Utils{
 		admin.click();
 		EmployeeName.sendKeys(username);
 		searchEmployee.click();
-		WebElement usernameDisplayed = driver.findElement(By.xpath("//div[@role='cell'][2]"));
 		//if employee found
 		if(usernameDisplayed.getText().equalsIgnoreCase(username)) {
 			System.out.println(usernameDisplayed.getText()+" is an employee of Xcompany.");
