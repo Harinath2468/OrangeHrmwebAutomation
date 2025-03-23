@@ -2,25 +2,20 @@ package pages;
 
 import java.io.IOException;
 import java.time.Duration;
-
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.WebElement;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.support.FindBy;
 import org.openqa.selenium.support.PageFactory;
-
 import Abstractcomponents.Utils;
 
-
 public class LandingDashboardPage extends Utils{
-
 WebDriver driver;
 
 public LandingDashboardPage(WebDriver driver) {
 		super(driver);
 		  this.driver =driver;
-		PageFactory.initElements( driver, this);
-		
+		PageFactory.initElements( driver, this);		
 	}
 
 	@FindBy(xpath="//input[@name='username']")
@@ -33,9 +28,7 @@ public LandingDashboardPage(WebDriver driver) {
 	WebElement timesheets;
 	@FindBy(xpath="//div[@class='oxd-table-cell-actions']//button[text()=' View ']")
 	WebElement viewRecord;
-	
-	
-	
+		
 	public void goToURL() throws IOException {
 		driver.get(getURL());
 		System.out.println(getURL());
