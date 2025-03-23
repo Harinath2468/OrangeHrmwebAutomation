@@ -31,14 +31,18 @@ public class AdminPage extends Utils{
 	@FindBy(xpath="//button[@type='submit']")
 	WebElement searchEmployee;
 	
+	@FindBy(xpath="//div[@role='cell'][4]")
+	List<WebElement> employees;
+	
 	//to search for an employee 
 	public void getEmployeeRecord() {
 		admin.click();
-		List<WebElement> employees = driver.findElements(By.xpath("//div[@role='cell'][4]"));
 		driver.manage().timeouts().implicitlyWait(Duration.ofSeconds(10));
 		for(WebElement employee : employees) {
-			System.out.println(employee.getText());	
+			System.out.println(employee.getText());
+			
 		}
+		
 	}
 	public void getEmployee(String username) throws EmployeeNotFoundException {
 		admin.click();
